@@ -223,10 +223,12 @@ interface IKlocekTetrisBezObrotu extends IKolor, IKsztalt {
 // lub
 type KlocekTetrisBezObrotu2 = IKolor & IKsztalt // nie ma znaczenia jak powstał typ
 
+// @ts-expect-error
 const stalyKlocek: KlocekTetrisBezObrotu = {
   ksztalt: 'kolo',
   kolor: 'czerwony'
 }
+// @ts-expect-error
 const LKlocek: KlocekTetris = {
   ksztalt: 'L',
   kolor: 'bialy',
