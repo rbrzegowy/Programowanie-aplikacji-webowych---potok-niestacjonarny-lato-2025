@@ -68,7 +68,7 @@ type Samochod = {
 type Garaz = {
   wlasciciel: string
   // ? oznacza że właściwość jest opcjonalna
-  samochody?: Samochod[]
+  samochody: Samochod[]
 }
 
 let mustang: Samochod = {
@@ -85,12 +85,7 @@ let garazKrzysia: Garaz = {
   samochody: []
 }
 // nie jesteśmy pewni czy krzyś ma samochody, więc ?.
-
-// !
-// ?
-// inny typ
-// if
-garazKrzysia.samochody!.length
+garazKrzysia.samochody?.length
 
 type User = {
   id: number,
@@ -99,26 +94,18 @@ type User = {
   name: string,
   age?: number,
   email?: string,
-  phone?: string,
-  gender?: string,
+  gender?: string
   city?: string
-}
-const ania: User = {
-  id: 1,
-  login: 'ania',
-  pass: 'aaa',
-  name: 'ania',
-  age: -2
 }
 
 type SomeObject = {
   width: number,
   height: number,
-  type: '2d' | '3d',
+  type: string,
   area: number,
   volume?: number
 }
-const square: SomeObject = {
+const box: SomeObject = {
   width: 10,
   height: 10,
   area: 100,
@@ -136,7 +123,7 @@ function filtrujTekst(filter: FilterFunction, data: string[]) {
   return data.filter(val => filter(val))
 }
 const wszystkieNaA = (data: string): boolean => {
-  return data.startsWith('a')
+  return true //data.startsWith('a')
 }
 filtrujTekst(wszystkieNaA, ['Aneta', 'tomek', 'antek'])
 
@@ -146,14 +133,13 @@ filtrujTekst(wszystkieNaA, ['Aneta', 'tomek', 'antek'])
 
 // czy na pewno tak chcemy robić? Później wszędzie type guardy:)
 type NiPiesNiWydra = string | number
-let wydra: NiPiesNiWydra = 'wydra'
+const wydra: NiPiesNiWydra = 'wydra'
+
 
 // ale już jako zestaw potecjalnie "podobnych" typów
 type Pies = any
 type Kot = any
-type Jez = any
-type Zwierze = Pies | Kot | Jez
-
+type Zwierze = Pies | Kot
 
 type Vege = 'Salatka' | 'Serek'
 type Country = 'Stek' | 'Boczek'
@@ -173,25 +159,22 @@ function zrobKolacje(danie: Supper) {}
 
 type KlocekNieWiadomoCo = {
   id: string,
-  level: number,
   kolor?: string,
   ksztalt?: string,
   obrot?: number
 }
-type KlocekZKoloremIKsztaltem = {
-  id: string,
-  kolor: string,
-  ksztalt: string,
-}
-type KlocekZKoloremIbrotem = {
-  id: string,
-  kolor: string,
-  obrot: string,
-}
+// type KlocekZKoloremIKsztaltem = {
+//   id: string,
+//   kolor: string,
+//   ksztalt: string,
+// }
+// type KlocekZKoloremIbrotem = {
+//   id: string,
+//   kolor: string,
+//   obrot: string,
+// }
 
-type KlocekBazowy = {
-  id: string,
-}
+
 
 type Kolor = {
   kolor: string
@@ -202,13 +185,12 @@ type Ksztalt = {
 type Obrot = {
   obrot: 0 | 90 | 180 | 270
 }
-type KlocekTetris = KlocekBazowy & Ksztalt & Kolor & Obrot
-type KlocekTetrisBezObrotu = KlocekBazowy & Ksztalt & Kolor
+type KlocekTetris = Ksztalt & Kolor & Obrot
+type KlocekTetrisBezObrotu = Ksztalt & Kolor
 
 let klocek: KlocekTetrisBezObrotu = {
-  id: '1',
   kolor: 'red',
-  ksztalt: 'L',
+  ksztalt: 'L'
 }
 
 interface IKolor {
@@ -218,17 +200,14 @@ interface IKsztalt {
   ksztalt: string
 }
 interface IKlocekTetrisBezObrotu extends IKolor, IKsztalt {
-
 }
 // lub
 type KlocekTetrisBezObrotu2 = IKolor & IKsztalt // nie ma znaczenia jak powstał typ
 
-// @ts-expect-error
 const stalyKlocek: KlocekTetrisBezObrotu = {
   ksztalt: 'kolo',
   kolor: 'czerwony'
 }
-// @ts-expect-error
 const LKlocek: KlocekTetris = {
   ksztalt: 'L',
   kolor: 'bialy',
@@ -262,8 +241,7 @@ enum SmarterPermTypes {
 
 
 
-const permissions: SmarterPermTypes[] = []
-permissions.some(perm => perm & SmarterPermTypes.read)
+// const permissions: SmarterPermTypes[] = []
 
 const readAndExecPerm = SmarterPermTypes.read | SmarterPermTypes.exec
 readAndExecPerm & SmarterPermTypes.none
@@ -306,19 +284,5 @@ enum X {
   B = 2
 }
 function computeValue() { return 1 }
-
-
-
-
-type NewClient = {
-  name: string,
-  email: string
-}
-type RegisteredClient = NewClient & {
-  id: number,
-}
-type Client = RegisteredClient | NewClient
-
-
 
 export {}
